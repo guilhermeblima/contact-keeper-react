@@ -65,7 +65,9 @@ import {
     }
 
     //update contact
-
+    const updateContact = contact => {
+        dispatch({type: UPDATE_CONTACT, payload: contact});
+    }
     // filter contacts
 
     // clear filter
@@ -77,6 +79,7 @@ import {
             current: state.current,
             addContact, 
             deleteContact, 
+            updateContact,
             setCurrent, 
             clearCurrent,
         }}>
