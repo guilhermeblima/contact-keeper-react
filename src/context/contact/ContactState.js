@@ -1,5 +1,4 @@
 import React, {useReducer} from 'react';
-import {v4 as uuidv4} from 'uuid';
 import ContactReducer from './contactReducer';
 import ContactContext from './contactContext';
 import {
@@ -9,45 +8,42 @@ import {
     CLEAR_CURRENT, 
     UPDATE_CONTACT, 
     FILTER_CONTACTS, 
-    CLEAR_FILTER
+    CLEAR_FILTER, 
+    CONTACT_ERROR,
 } from '../types';
+import axios from 'axios';
 
  const ContactState = props => {
     const initialState ={
-        contacts: [
-            {
-                id: 1, 
-                name: 'Jill Johnson', 
-                email: 'jill@gmail.com', 
-                phone: '111-111-1111', 
-                type: 'personal'
-            },
-            {
-                id: 2, 
-                name: 'Harry Week', 
-                email: 'harry@gmail.com', 
-                phone: '098-234-231', 
-                type: 'personal'
-            },
-            {
-                id: 3, 
-                name: 'Gal Johnson', 
-                email: 'gal@gmail.com', 
-                phone: '123-123-1221', 
-                type: 'professional'
-            },
-        ], 
+        contacts: [], 
         current: null, 
         filtered: null,
-
+        error: null,
     };
 
     const [state, dispatch] = useReducer(ContactReducer, initialState);
 
     //Add contact
-    const addContact = contact => {
-        contact.id = uuidv4;
-        dispatch({type: ADD_CONTACT, payload: contact});
+    const addContact = async contact => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        try {
+            const res = await axios.post('/api/contacts', contact, config);
+
+            dispatch({
+                type: ADD_CONTACT,
+                payload: res.data
+            });
+            
+        } catch (err) {
+            dispatch({
+                type: CONTACT_ERROR,
+                payload: err.response.data.msg
+            });
+        }
     }
 
     //Delete contact
@@ -85,6 +81,7 @@ import {
             contacts: state.contacts,
             current: state.current,
             filtered: state.filtered,
+            error: state.error,
             addContact, 
             deleteContact, 
             updateContact,

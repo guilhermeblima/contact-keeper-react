@@ -17,13 +17,13 @@ const Contacts = () => {
                 {
                 filtered !== null ? 
                     filtered.map(contact => (
-                        <motion.div key={contact.id} layout initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: 0.2}}>
+                        <motion.div key={contact._id} layout initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: 0.2}}>
                             <ContactItem contact={contact}/>
                         </motion.div>
                     )) 
                 : 
                 contacts.map(contact => (
-                        <motion.div key={contact.id} layout initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: 0.2}}>
+                        <motion.div key={contact._id} layout initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: 0.2}}>
                             <ContactItem contact={contact}/>
                         </motion.div>))
                 }

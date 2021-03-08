@@ -94,7 +94,7 @@ import axios from 'axios';
         }
     }
     // Logout
-    const logout = () => console.log('logout');
+    const logout = () => dispatch({type: LOGOUT});
 
     // Clear Erros
     const clearErrors = () => console.log('clearError');
