@@ -2,6 +2,8 @@ import React, {useReducer} from 'react';
 import ContactReducer from './contactReducer';
 import ContactContext from './contactContext';
 import {
+    GET_CONTACTS,
+    CLEAR_CONTACTS,
     ADD_CONTACT, 
     DELETE_CONTACT, 
     SET_CURRENT, 
@@ -15,7 +17,7 @@ import axios from 'axios';
 
  const ContactState = props => {
     const initialState ={
-        contacts: [], 
+        contacts: null, 
         current: null, 
         filtered: null,
         error: null,
@@ -23,6 +25,23 @@ import axios from 'axios';
 
     const [state, dispatch] = useReducer(ContactReducer, initialState);
 
+    // Get Contacts
+    const getContacts = async () => {
+        try {
+            const res = await axios.get('/api/contacts');
+
+            dispatch({
+                type: GET_CONTACTS,
+                payload: res.data
+            });
+            
+        } catch (err) {
+            dispatch({
+                type: CONTACT_ERROR,
+                payload: err.response.data.msg
+            });
+        }
+    }
     //Add contact
     const addContact = async contact => {
         const config = {
@@ -83,6 +102,7 @@ import axios from 'axios';
             filtered: state.filtered,
             error: state.error,
             addContact, 
+            getContacts,
             deleteContact, 
             updateContact,
             setCurrent, 

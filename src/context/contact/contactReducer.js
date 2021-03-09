@@ -6,11 +6,18 @@ import {
     UPDATE_CONTACT, 
     FILTER_CONTACTS, 
     CLEAR_FILTER,
-    CONTACT_ERROR
+    CONTACT_ERROR,
+    GET_CONTACTS
 } from '../types';
 
 const contactReducer = (state, action) => {
     switch(action.type) {
+        case GET_CONTACTS: 
+            return {
+                ...state, 
+                contacts: action.payload, 
+                loading: false
+            };
         case ADD_CONTACT: 
             return {
                 ...state, 
