@@ -14,6 +14,8 @@ import {
 } from '../types';
 import axios from 'axios';
 
+let baseUrl = process.env.REACT_APP_BASE_URL;
+
  const AuthState = props => {
     const initialState ={
         token: localStorage.getItem('token'),
@@ -33,7 +35,7 @@ import axios from 'axios';
         }
 
         try {
-            const res = await axios.get('/api/auth');
+            const res = await axios.get(`${baseUrl}/api/auth`);
 
             dispatch({
                 type: USER_LOADED, 
@@ -54,7 +56,7 @@ import axios from 'axios';
             }
         }
         try {
-            const res = await axios.post('/api/users', formData, config);
+            const res = await axios.post(`${baseUrl}/api/users`, formData, config);
 
             dispatch({
                 type: REGISTER_SUCCESS,
@@ -79,7 +81,7 @@ import axios from 'axios';
             }
         }
         try {
-            const res = await axios.post('/api/auth', formData, config);
+            const res = await axios.post(`${baseUrl}/api/auth`, formData, config);
 
             dispatch({
                 type: LOGIN_SUCCESS, 

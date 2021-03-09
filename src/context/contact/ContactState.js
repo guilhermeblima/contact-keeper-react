@@ -15,6 +15,8 @@ import {
 } from '../types';
 import axios from 'axios';
 
+let baseUrl = process.env.REACT_APP_BASE_URL;
+
  const ContactState = props => {
     const initialState ={
         contacts: null, 
@@ -28,7 +30,7 @@ import axios from 'axios';
     // Get Contacts
     const getContacts = async () => {
         try {
-            const res = await axios.get('/api/contacts');
+            const res = await axios.get(`${baseUrl}/api/contacts`);
 
             dispatch({
                 type: GET_CONTACTS,
@@ -50,7 +52,7 @@ import axios from 'axios';
             }
         }
         try {
-            const res = await axios.post('/api/contacts', contact, config);
+            const res = await axios.post(`${baseUrl}/api/contacts`, contact, config);
 
             dispatch({
                 type: ADD_CONTACT,
@@ -73,7 +75,7 @@ import axios from 'axios';
             }
         }
         try {
-            const res = await axios.put(`/api/contacts/${contact._id}`, contact, config);
+            const res = await axios.put(`${baseUrl}/api/contacts/${contact._id}`, contact, config);
 
             dispatch({type: UPDATE_CONTACT, payload: res.data});
             
@@ -90,7 +92,7 @@ import axios from 'axios';
     const deleteContact = async _id => {
         
         try {
-            await axios.delete(`/api/contacts/${_id}`);
+            await axios.delete(`${baseUrl}/api/contacts/${_id}`);
 
             dispatch({type: DELETE_CONTACT, payload: _id});
             
