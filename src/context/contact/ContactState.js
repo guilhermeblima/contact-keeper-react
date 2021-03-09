@@ -80,6 +80,11 @@ import axios from 'axios';
         dispatch({type: CLEAR_CURRENT, });
     }
 
+    // clear contacts
+    const clearContacts = () => {
+        dispatch({type: CLEAR_CONTACTS, });
+    }
+
     //update contact
     const updateContact = contact => {
         dispatch({type: UPDATE_CONTACT, payload: contact});
@@ -109,6 +114,7 @@ import axios from 'axios';
             clearCurrent,
             filterContacts, 
             clearFilter,
+            clearContacts,
         }}>
             {props.children}
         </ContactContext.Provider>
